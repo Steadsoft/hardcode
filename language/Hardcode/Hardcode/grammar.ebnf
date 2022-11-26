@@ -1,0 +1,43 @@
+﻿/* https://bnfplayground.pauliankline.com/ */
+
+<DCL> ::= " dcl " | " declare "
+<PROC> ::= " proc " | " procedure "
+<FUNC> ::= " func " | " function "
+<BIN>  ::= " bin " | " binary "
+<DEC> ::= " dec " | "decimal "
+<STRING> ::= " string "
+<STATIC> ::= " static "
+<BASED> ::= " based "
+<CALL> ::= " call "
+<GOTO> ::= " goto "
+<RETURN> ::= " return "
+<IF> ::= " if "
+<THEN> ::= " then "
+<ELSE> ::= " else "
+<FIXED> ::= " fixed "
+<FLOAT> ::= " float "
+
+<compilation_unit> ::= <stmt>+
+<stmt> ::= <dcl_stmt> | <def_stmt>  
+<dcl_stmt> ::= <DCL> <identifier> <array_specifier>? <reqd_dcl_attribs> <optional_dcl_attribs>* ";"
+<identifier> ::= [a-z]+ " "
+<def_stmt> ::= ( <PROC> | <FUNC> ) <identifier> <arglist>? <reqd_dcl_attribs>? <block>
+<arglist> ::= "(" <identifier> ( "," <identifier>)* ")"
+<array_specifier> ::= "(" <array_term> ( "," <array_term>)* ")"
+<array_term> ::= [0-9]+  
+<reqd_dcl_attribs> ::= <numeric> | <STRING>
+<numeric> ::= (<base> <scale>?) | (<scale> <base>?)
+<binary> ::= <BIN> (<FIXED> | <FLOAT>)?
+<decimal> ::= <DEC> (<FIXED> | <FLOAT>)?
+<base> ::= <BIN> | <DEC>
+<scale> ::= <FIXED> | <FLOAT>
+<optional_dcl_attribs> ::= <STATIC> | <BASED>
+<block> ::= "{" (<dcl_stmt>)* (<exe_stmt>)* "}"
+<exe_stmt> ::= (<assignment> | <keyword_stmt>) ";"
+<assignment> ::= <identifier> " = " <identifier> ";"
+<keyword_stmt> ::= <call_stmt> | <goto_stmt> | <return_stmt> | <if_stmt>
+<call_stmt> ::= <CALL> <identifier> <arglist>?
+<goto_stmt> ::= <GOTO> <identifier> 
+<return_stmt> ::= <RETURN> | (<RETURN> "(" <expression> ")")
+<if_stmt> ::= <IF> <expression> <THEN> (<block> | <exe_stmt>) (<ELSE> (<block> | <exe_stmt>) )?
+<expression> ::= <identifier>
