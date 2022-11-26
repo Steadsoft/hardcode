@@ -21,6 +21,9 @@
 <LOOP> ::= " loop "
 <WHILE> ::= " while "
 <UNTIL> ::= " until "
+<TO> ::= " to "
+<BY> ::= " by "
+<REPEAT> ::= " repeat "
 
 <compilation_unit> ::= <stmt>+
 <stmt> ::= <dcl_stmt> | <def_stmt>  
@@ -50,10 +53,11 @@
 <goto_stmt> ::= <GOTO> <identifier> ( "(" (<integers> | <identifier>) ")" )?
 <return_stmt> ::= <RETURN> | (<RETURN> "(" <expression> ")")
 <if_stmt> ::= <IF> <expression> <THEN> (<block> | <exe_stmt>) (<ELSE> (<block> | <exe_stmt>) )?
-<loop_stmt> ::= <LOOP> <while>? <until>? <block> 
+<loop_stmt> ::= <LOOP> (<iterate>? | <repeat>?) ((<while>? <until>?) | (<until>? <while>?))? <block> 
 <while> ::= <WHILE> "(" <expression> ")"
 <until> ::= <UNTIL> "(" <expression> ")" 
-
+<iterate> ::= <identifier> "=" <expression> <TO> <expression> (<BY> <expression>)?
+<repeat> ::= <identifier> "=" <expression> <REPEAT> "(" <expression> ")"
 /* expressions */
 <expression> ::= <identifier>
 
