@@ -16,7 +16,8 @@
 <ELSE> ::= " else "
 <FIXED> ::= " fixed "
 <FLOAT> ::= " float "
-
+<VAR> ::= " varying "
+<DEF> ::= " defined "
 <compilation_unit> ::= <stmt>+
 <stmt> ::= <dcl_stmt> | <def_stmt>  
 <dcl_stmt> ::= <DCL> <identifier> <array_specifier>? <reqd_dcl_attribs> <optional_dcl_attribs>* ";"
@@ -25,13 +26,17 @@
 <arglist> ::= "(" <identifier> ( "," <identifier>)* ")"
 <array_specifier> ::= "(" <array_term> ( "," <array_term>)* ")"
 <array_term> ::= [0-9]+  
-<reqd_dcl_attribs> ::= <numeric> | <STRING>
+<reqd_dcl_attribs> ::= <numeric> | (<STRING> <VAR>?) | <based> | <defined>
+<optional_dcl_attribs> ::= <STATIC> | <based> | <defined>
+
+<defined> ::= (<DEF> ("(" <identifier> ")") )
+<based> ::= (<BASED> ("(" <identifier> ")")? )
+
 <numeric> ::= (<base> <scale>?) | (<scale> <base>?)
 <binary> ::= <BIN> (<FIXED> | <FLOAT>)?
 <decimal> ::= <DEC> (<FIXED> | <FLOAT>)?
 <base> ::= <BIN> | <DEC>
 <scale> ::= <FIXED> | <FLOAT>
-<optional_dcl_attribs> ::= <STATIC> | <BASED>
 <block> ::= "{" (<dcl_stmt>)* (<exe_stmt>)* "}"
 <exe_stmt> ::= (<assignment> | <keyword_stmt>) ";"
 <assignment> ::= <identifier> " = " <identifier> ";"
@@ -41,3 +46,7 @@
 <return_stmt> ::= <RETURN> | (<RETURN> "(" <expression> ")")
 <if_stmt> ::= <IF> <expression> <THEN> (<block> | <exe_stmt>) (<ELSE> (<block> | <exe_stmt>) )?
 <expression> ::= <identifier>
+
+
+
+
